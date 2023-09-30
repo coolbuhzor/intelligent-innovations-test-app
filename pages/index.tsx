@@ -1,5 +1,8 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import { useQuery } from "react-query";
+import { fetchUnsplashPhotos } from "@/services/api";
+import { useEffect, useState } from "react";
 
 // const inter = Inter({ subsets: ['latin'] })
 const inter = Inter({
@@ -10,34 +13,49 @@ const inter = Inter({
 });
 
 export default function Home() {
+  const [query, setQuery] = useState("");
+  const { data, isLoading, isError, error } = useQuery(
+    ["unsplashPhotos", query],
+    () => fetchUnsplashPhotos(query)
+  );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="w-full text-center mt-10">an error occurred</div>;
+  }
+
   return (
     <main
       className={`flex min-h-screen text-red-500 flex-col items-center justify-between ${inter.className}`}
     >
-      <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam nihil
-        ea facilis possimus, minima iste corporis optio necessitatibus, labore
-        sit quos, iure porro eaque sunt qui voluptate provident saepe
-        perspiciatis. Nemo accusamus officia aliquam maxime at illum ut
-        reiciendis hic ratione! Ducimus praesentium est porro sint fugiat?
-        Consequatur, magnam. Quos, doloremque autem tempore hic reiciendis non
-        fuga ab nisi nam unde iusto, et dolores natus libero, iste illum dolor
-        totam esse veniam sapiente laborum. Cupiditate fugiat neque, earum id
-        odit repellendus sunt iusto quam maxime tempore similique dolorem
-        eveniet, quia eius expedita culpa? Iusto, quod architecto nemo autem,
-        sed molestias culpa nobis magni accusantium facere voluptatem nostrum.
-        Repellendus dolores illum nam rerum maiores consequatur corrupti culpa
-        soluta. Explicabo libero autem est reprehenderit. Voluptatibus incidunt,
-        dolores quae ea enim mollitia quisquam reprehenderit est? Architecto
-        porro commodi inventore quasi exercitationem aut laboriosam. Quas
-        praesentium, atque ducimus dolor accusantium laudantium? Iusto doloribus
-        fugiat nostrum ratione officiis animi, dolores quod assumenda dolorem,
-        laboriosam cupiditate ipsa quo. Repellat nam id quos sint saepe, ea,
-        sapiente quaerat vel quibusdam esse obcaecati? Iure officia laborum,
-        asperiores obcaecati inventore labore! Voluptates corrupti voluptas aut
-        maiores sequi, esse ullam officia consequuntur iusto perferendis, minima
-        pariatur. Illo amet dolorum quos.
-      </p>
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
+        {data.map((photo: any) => (
+          <div
+            className="h-[350px] relative rounded-md w-full shadow-lg border cursor-pointer outer-div"
+            key={photo.id}
+          >
+            <Image
+              src={photo.urls.regular}
+              alt={photo.alt_description}
+              fill
+              className="rounded-md"
+            />
+            <div className="bg-white absolute w-full rounded-b-md z-10 inner-div flex flex-col gap-2 p-4">
+              <p className="text-[#342C9A] font-bold w-full truncate">
+                {photo?.user?.first_name}&nbsp;{photo?.user?.last_name}
+              </p>
+              <p className="text-sm text-gray-500">{photo?.user?.location}</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="w-full gap-1 border h-10 rounded bg-[#C73636]"></div>
+                <div className="w-full gap-1 border h-10 rounded bg-[#342C9A]"></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </main>
   );
 }

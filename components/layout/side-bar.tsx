@@ -63,7 +63,7 @@ const Sidebar = (props: SideBarProps) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center mt-9 justify-between gap-2 px-6 ">
-        <p className="text-xl font-bold text-[#4D3BD3]">BLUECUBE</p>
+        <p className="text-xl font-bold text-[rgb(77,59,211)]">BLUECUBE</p>
         <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -86,7 +86,7 @@ const Sidebar = (props: SideBarProps) => {
                 <NavLink href={item.href} name={item.title} />
               </li>
             ))}
-            <li className="font-medium text-base">SHARE</li>{" "}
+            <li className="font-medium text-base">SHARE</li>
             {routes.slice(2, 8).map((item) => (
               <li key={item.id}>
                 <NavLink href={item.href} name={item.title} />

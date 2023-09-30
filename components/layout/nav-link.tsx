@@ -8,7 +8,6 @@ export const NavLink = (props: {
   slug?: string;
 }) => {
   const pathName = usePathname();
-  console.log(props.href);
 
   return (
     <div

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
+import { Caret, Notification } from "@/assets/svg";
 
 const dropDownItems = [
   {
@@ -15,7 +16,6 @@ const dropDownItems = [
 ];
 export const HeaderDropdown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
@@ -36,29 +36,28 @@ export const HeaderDropdown = () => {
   });
 
   return (
-    <div className="relative">
-      <Link
+    <div className="relative w-[150px]">
+      <div
         ref={trigger}
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-4"
-        href="#"
+        className="flex gap-4 items-center w-full justify-between "
       >
-        <div className="hidden text-right lg:block">test</div>
+        <div>
+          <Notification />
+        </div>
+        <div className="h-14 w-14 rounded-full border"></div>
 
-        <div className="h-[12px] w-[12px] rounded-full"></div>
-        {/* <Caret /> */}
-      </Link>
+        <Caret className="stroke-[#342C9A]" />
+      </div>
 
       {/* <!-- Dropdown Start --> */}
       <div
         ref={dropdown}
-        // onFocus={() => setDropdownOpen(true)}
-        // onBlur={() => setDropdownOpen(false)}
         className={`absolute right-0 mt-4 flex w-[200px] flex-col rounded-sm border bg-white shadow-default  ${
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
-        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 ">
+        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7 border border-red-500 ">
           {dropDownItems.map((item) => (
             <li key={item.id}>
               <div className="flex items-center gap-2 font-[450] duration-300 ease-in-out hover:text-[#FFA400] text-primary text-sm">
