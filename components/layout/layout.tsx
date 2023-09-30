@@ -1,13 +1,6 @@
-// Layout.tsx
-
 import { useState, ReactNode } from "react";
-import Link from "next/link";
 import Header from "./header";
 import Sidebar from "./side-bar";
-
-interface LayoutProps {
-  children: ReactNode;
-}
 
 export const Layout = ({ children }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -37,5 +30,3 @@ export const Layout = ({ children }: LayoutProps) => {
     </div>
   );
 };
-
-// export default Layout;

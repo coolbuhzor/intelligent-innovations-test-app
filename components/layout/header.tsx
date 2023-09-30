@@ -1,14 +1,17 @@
+import React, { useState } from "react";
 import Link from "next/link";
-import React from "react";
 import { HeaderDropdown } from "./header-drop-down";
 import { useSearch } from "@/context/search-context";
-import { SearchIcon } from "@/assets/svg";
+import { Hamburger, SearchIcon } from "@/assets/svg";
 
-const Header = (props: any) => {
-  const { searchQuery, setSearch } = useSearch();
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+const Header = (props: ISideBarProps) => {
+  const { setSearch } = useSearch();
+  const [query, setQuery] = useState("");
+
+  const handleSearch = () => {
+    setSearch(query);
   };
+
   return (
     <header className="sticky top-0 z-[10] flex w-full bg-white border-b border-[#B7B3BF] drop-shadow-1 ">
       <div className="flex flex-grow sm:items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11 flex-col sm:flex-row items-start">
@@ -21,19 +24,19 @@ const Header = (props: any) => {
               e.stopPropagation();
               props.setSidebarOpen(!props.sidebarOpen);
             }}
-            className="z-10 block rounded-sm border bg-white p-1.5 shadow-sm lg:hidden"
+            className="z-10 block rounded-sm border bg-white shadow-sm lg:hidden w-9"
           >
-            {/* <Hamburger /> */}- - -
+            <Hamburger />
           </button>
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 lg:hidden" href="/">
-            home
+            <p className="text-xl font-bold text-[rgb(77,59,211)]">BLUECUBE</p>
           </Link>
         </div>
 
-        <div className=" flex items-center gap-3 w-full justify-between ">
-          <div className="flex py-2 w-full shadow-2xl border-[0.5px] rounded px-4">
+        <div className=" flex flex-col sm:flex-row items-center gap-3 w-full justify-between md:pl-2 lg:pl-[unset] ">
+          <div className="flex py-2 w-full shadow-2xl mt-2 sm:mt-[unset] border-[0.5px] rounded px-4">
             <div className="w-full relative flex ">
               <div className="w-10 h-full flex justify-center items-center relative ">
                 <SearchIcon />
@@ -42,10 +45,13 @@ const Header = (props: any) => {
                 type="text"
                 className="h-10 w-full outline-none"
                 placeholder="Find something..."
-                value={searchQuery}
-                onChange={handleSearch}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
               />
-              <button className="px-4 py-2 bg-[#342C9A] rounded text-white font-medium">
+              <button
+                onClick={handleSearch}
+                className="px-4 py-2 bg-[#342C9A] rounded text-white font-medium"
+              >
                 search
               </button>
             </div>

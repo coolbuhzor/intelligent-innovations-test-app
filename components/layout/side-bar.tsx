@@ -1,11 +1,7 @@
 import Link from "next/link";
-import React, { useRef, Dispatch, SetStateAction } from "react";
+import React, { useRef } from "react";
 import { NavLink } from "./nav-link";
 
-type SideBarProps = {
-  sidebarOpen: boolean;
-  setSidebarOpen: Dispatch<SetStateAction<boolean>>;
-};
 const routes = [
   {
     id: 1,
@@ -49,7 +45,7 @@ const routes = [
   },
 ];
 
-const Sidebar = (props: SideBarProps) => {
+const Sidebar = (props: ISideBarProps) => {
   const { setSidebarOpen, sidebarOpen } = props;
   const trigger = useRef<HTMLButtonElement>(null);
   const sidebar = useRef<HTMLElement>(null);
@@ -62,14 +58,14 @@ const Sidebar = (props: SideBarProps) => {
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center mt-9 justify-between gap-2 px-6 ">
+      <div className="flex flex-col mt-9 justify-between gap-2 px-6 ">
         <p className="text-xl font-bold text-[rgb(77,59,211)]">BLUECUBE</p>
         <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
-          className="block lg:hidden text-primary"
+          className="block lg:hidden text-primary border w-fit"
         >
           X
         </button>

@@ -2,7 +2,9 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useQuery } from "react-query";
 import { fetchUnsplashPhotos } from "@/services/api";
-import { useEffect, useState } from "react";
+import { useSearch } from "@/context/search-context";
+import { Fave, Unlike } from "@/assets/svg";
+import Head from "next/head";
 
 // const inter = Inter({ subsets: ['latin'] })
 const inter = Inter({
@@ -13,10 +15,12 @@ const inter = Inter({
 });
 
 export default function Home() {
-  const [query, setQuery] = useState("");
+  const { searchQuery } = useSearch();
+
+  console.log(searchQuery, "searchQuery");
   const { data, isLoading, isError, error } = useQuery(
-    ["unsplashPhotos", query],
-    () => fetchUnsplashPhotos(query)
+    ["unsplashPhotos", searchQuery],
+    () => fetchUnsplashPhotos(searchQuery)
   );
 
   if (isLoading) {
@@ -29,8 +33,13 @@ export default function Home() {
 
   return (
     <main
-      className={`flex min-h-screen text-red-500 flex-col items-center justify-between ${inter.className}`}
+      className={`flex min-h-screen text-red-500 flex-col items-center justify-between pb-10 ${inter.className}`}
     >
+      <Head>
+        <title>Intelligent Innovation Test</title>
+        <meta name="description" content="This is a Next.js app." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
         {data.map((photo: any) => (
           <div
@@ -41,16 +50,20 @@ export default function Home() {
               src={photo.urls.regular}
               alt={photo.alt_description}
               fill
-              className="rounded-md"
+              className="rounded-md select-none"
             />
-            <div className="bg-white absolute w-full rounded-b-md z-10 inner-div flex flex-col gap-2 p-4">
+            <div className="bg-white absolute w-full rounded-b-md z-1 inner-div flex flex-col gap-2 p-4">
               <p className="text-[#342C9A] font-bold w-full truncate">
                 {photo?.user?.first_name}&nbsp;{photo?.user?.last_name}
               </p>
               <p className="text-sm text-gray-500">{photo?.user?.location}</p>
               <div className="grid grid-cols-2 gap-3">
-                <div className="w-full gap-1 border h-10 rounded bg-[#C73636]"></div>
-                <div className="w-full gap-1 border h-10 rounded bg-[#342C9A]"></div>
+                <div className="w-full gap-1 border h-10 grid place-content-center rounded bg-[#C73636]">
+                  <Fave className="stroke-[#fff]" />
+                </div>
+                <div className="w-full gap-1 border h-10 rounded bg-[#342C9A] grid place-content-center">
+                  <Unlike className="stroke-[#fff]" />
+                </div>
               </div>
             </div>
           </div>
