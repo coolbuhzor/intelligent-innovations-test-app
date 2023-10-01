@@ -17,17 +17,24 @@ const inter = Inter({
 export default function Home() {
   const { searchQuery } = useSearch();
 
-  console.log(searchQuery, "searchQuery");
-  const { data, isLoading, isError, error } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     ["unsplashPhotos", searchQuery],
     () => fetchUnsplashPhotos(searchQuery)
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
+        {Array(10)
+          .fill(0)
+          .map((_, i) => (
+            <SkeletonLoader key={i} />
+          ))}
+      </div>
+    );
   }
 
-  if (error) {
+  if (isError) {
     return <div className="w-full text-center mt-10">an error occurred</div>;
   }
 
@@ -50,7 +57,7 @@ export default function Home() {
               src={photo.urls.regular}
               alt={photo.alt_description}
               fill
-              className="rounded-md select-none"
+              className="rounded-md select-none object-cover"
             />
             <div className="bg-white absolute w-full rounded-b-md z-1 inner-div flex flex-col gap-2 p-4">
               <p className="text-[#342C9A] font-bold w-full truncate">
@@ -72,3 +79,17 @@ export default function Home() {
     </main>
   );
 }
+
+interface SkeletonLoaderProps {
+  className?: string;
+}
+
+const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ className }) => {
+  return (
+    <div
+      className={`bg-gray-300 animate-pulse w-full h-[350px] border ${
+        className || ""
+      }`}
+    ></div>
+  );
+};
