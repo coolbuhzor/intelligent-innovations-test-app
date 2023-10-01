@@ -1,21 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useQuery } from "react-query";
-import { fetchUnsplashPhotos } from "@/services/api";
 import { useSearch } from "@/context/search-context";
 import { Fave, SelectCaret, Unlike } from "@/assets/svg";
 
-// const inter = Inter({ subsets: ['latin'] })
-
 export default function Home() {
-  const { searchQuery } = useSearch();
+  const { photos, error, isLoading, isFetching } = useSearch();
 
-  const { data, isLoading, isError } = useQuery(
-    ["unsplashPhotos", searchQuery],
-    () => fetchUnsplashPhotos(searchQuery)
-  );
-
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
         {Array(10)
@@ -27,7 +18,7 @@ export default function Home() {
     );
   }
 
-  if (isError) {
+  if (error) {
     return <div className="w-full text-center mt-20">an error occurred</div>;
   }
 
@@ -85,7 +76,7 @@ export default function Home() {
         </div>
 
         <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full">
-          {data.map((photo: any) => (
+          {photos?.map((photo: any) => (
             <div
               className="h-[350px] relative rounded-md w-full shadow-lg border cursor-pointer outer-div"
               key={photo.id}
@@ -125,7 +116,7 @@ interface SkeletonLoaderProps {
 const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ className }) => {
   return (
     <div
-      className={`bg-gray-300 animate-pulse w-full h-[350px] border ${
+      className={`bg-gray-300 animate-pulse w-full h-[350px] border rounded-md ${
         className || ""
       }`}
     ></div>

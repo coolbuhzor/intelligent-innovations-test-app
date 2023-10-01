@@ -1,7 +1,13 @@
 export const fetchUnsplashPhotos = async (query = "") => {
   try {
     const response = await fetch(
-      `https://api.unsplash.com/photos?count=12&query=${query}`,
+      `
+      ${
+        query === ""
+          ? `https://api.unsplash.com/photos`
+          : `https://api.unsplash.com/search/photos?query=${query}`
+      }
+      `,
       {
         headers: {
           Authorization: `Client-ID ${process.env.NEXT_PUBLIC_API_BASE_URL}`,

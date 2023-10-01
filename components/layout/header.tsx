@@ -11,6 +11,15 @@ const Header = (props: ISideBarProps) => {
   const handleSearch = () => {
     setSearch(query);
   };
+  const handleChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    const value = e.target.value;
+    if (value === "") {
+      setSearch("");
+    }
+    setQuery(e.target.value);
+  };
 
   return (
     <header className="sticky top-0 z-[10] flex w-full bg-white border-b border-[#B7B3BF] drop-shadow-1 ">
@@ -46,7 +55,7 @@ const Header = (props: ISideBarProps) => {
                 className="h-10 w-full outline-none"
                 placeholder="Find something..."
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => handleChange(e)}
               />
               <button
                 onClick={handleSearch}
