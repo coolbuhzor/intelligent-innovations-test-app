@@ -59,7 +59,7 @@ const Sidebar = (props: ISideBarProps) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex flex-col mt-9 justify-between gap-2 px-6 ">
-        <p className="text-xl font-bold text-[rgb(77,59,211)]">BLUECUBE</p>
+        <p className="text-xl font-bold text-[#342C9A]">BLUECUBE</p>
         <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}

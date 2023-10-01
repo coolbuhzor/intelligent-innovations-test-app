@@ -36,7 +36,7 @@ const Header = (props: ISideBarProps) => {
         </div>
 
         <div className=" flex flex-col sm:flex-row items-center gap-3 w-full justify-between md:pl-2 lg:pl-[unset] ">
-          <div className="flex py-2 w-full shadow-2xl mt-2 sm:mt-[unset] border-[0.5px] rounded px-4">
+          <div className="flex py-1 w-full shadow-2xl mt-2 sm:mt-[unset] border-[0.5px] rounded px-4">
             <div className="w-full relative flex ">
               <div className="w-10 h-full flex justify-center items-center relative ">
                 <SearchIcon />
@@ -50,15 +50,13 @@ const Header = (props: ISideBarProps) => {
               />
               <button
                 onClick={handleSearch}
-                className="px-4 py-2 bg-[#342C9A] rounded text-white font-medium"
+                className="px-4 py-1 text-sm bg-[#342C9A] rounded text-white font-medium"
               >
                 search
               </button>
             </div>
           </div>
-          {/* <!-- User Area --> */}
           <HeaderDropdown />
-          {/* <!-- User Area --> */}
         </div>
       </div>
     </header>

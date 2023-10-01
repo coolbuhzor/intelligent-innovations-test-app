@@ -1,11 +1,19 @@
 import { useState, ReactNode } from "react";
 import Header from "./header";
 import Sidebar from "./side-bar";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const Layout = ({ children }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="w-full ">
+    <div className={`w-full ${inter.className}`}>
       <div className="flex h-screen w-full overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />

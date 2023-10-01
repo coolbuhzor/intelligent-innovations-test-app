@@ -1,18 +1,11 @@
+import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import { useQuery } from "react-query";
 import { fetchUnsplashPhotos } from "@/services/api";
 import { useSearch } from "@/context/search-context";
-import { Fave, Unlike } from "@/assets/svg";
-import Head from "next/head";
+import { Fave, SelectCaret, Unlike } from "@/assets/svg";
 
 // const inter = Inter({ subsets: ['latin'] })
-const inter = Inter({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 export default function Home() {
   const { searchQuery } = useSearch();
@@ -35,46 +28,91 @@ export default function Home() {
   }
 
   if (isError) {
-    return <div className="w-full text-center mt-10">an error occurred</div>;
+    return <div className="w-full text-center mt-20">an error occurred</div>;
   }
+
+  const headings = [
+    {
+      id: 1,
+      name: "World",
+    },
+    {
+      id: 2,
+      name: "Following",
+    },
+    {
+      id: 3,
+      name: "Popular",
+    },
+    {
+      id: 4,
+      name: "Post",
+    },
+    {
+      id: 5,
+      name: "Gender",
+    },
+    {
+      id: 6,
+      name: "Location",
+    },
+    {
+      id: 7,
+      name: "Profession",
+    },
+  ];
 
   return (
     <main
-      className={`flex min-h-screen text-red-500 flex-col items-center justify-between pb-10 ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center justify-between pb-10 `}
     >
       <Head>
         <title>Intelligent Innovation Test</title>
         <meta name="description" content="This is a Next.js app." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
-        {data.map((photo: any) => (
-          <div
-            className="h-[350px] relative rounded-md w-full shadow-lg border cursor-pointer outer-div"
-            key={photo.id}
-          >
-            <Image
-              src={photo.urls.regular}
-              alt={photo.alt_description}
-              fill
-              className="rounded-md select-none object-cover"
-            />
-            <div className="bg-white absolute w-full rounded-b-md z-1 inner-div flex flex-col gap-2 p-4">
-              <p className="text-[#342C9A] font-bold w-full truncate">
-                {photo?.user?.first_name}&nbsp;{photo?.user?.last_name}
-              </p>
-              <p className="text-sm text-gray-500">{photo?.user?.location}</p>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="w-full gap-1 border h-10 grid place-content-center rounded bg-[#C73636]">
-                  <Fave className="stroke-[#fff]" />
-                </div>
-                <div className="w-full gap-1 border h-10 rounded bg-[#342C9A] grid place-content-center">
-                  <Unlike className="stroke-[#fff]" />
+      <div className="w-full ">
+        <div className="w-full flex justify-between mb-5 overflow-x-auto ">
+          {headings.map((item, i) => (
+            <div
+              className={`header-item first:rounded-l-[10px] last:border-r-0 last:rounded-r-[10px] border-r bg-white w-full py-2 flex justify-around items-center text-xs md:text-base`}
+              key={i}
+            >
+              {item.name}
+              <SelectCaret />
+            </div>
+          ))}
+        </div>
+
+        <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full">
+          {data.map((photo: any) => (
+            <div
+              className="h-[350px] relative rounded-md w-full shadow-lg border cursor-pointer outer-div"
+              key={photo.id}
+            >
+              <Image
+                src={photo.urls.regular}
+                alt={photo.alt_description}
+                fill
+                className="rounded-md select-none object-cover"
+              />
+              <div className="bg-white absolute w-full rounded-b-md z-1 inner-div flex flex-col gap-2 p-4">
+                <p className="text-[#342C9A] font-bold w-full truncate">
+                  {photo?.user?.first_name}&nbsp;{photo?.user?.last_name}
+                </p>
+                <p className="text-sm text-gray-500">{photo?.user?.location}</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="w-full gap-1 border h-10 grid place-content-center rounded bg-[#C73636]">
+                    <Fave className="stroke-[#fff]" />
+                  </div>
+                  <div className="w-full gap-1 border h-10 rounded bg-[#342C9A] grid place-content-center">
+                    <Unlike className="stroke-[#fff]" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </section>
       </div>
     </main>
   );

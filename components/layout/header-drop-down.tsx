@@ -47,7 +47,7 @@ export const HeaderDropdown = () => {
   });
 
   return (
-    <div className="relative w-full  sm:w-[150px] ">
+    <div className={`relative w-full  sm:w-[150px] `}>
       <div
         ref={trigger}
         onClick={() => setDropdownOpen(!dropdownOpen)}
