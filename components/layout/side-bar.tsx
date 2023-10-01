@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React, { useRef } from "react";
 import { NavLink } from "./nav-link";
+import { Cancel } from "@/assets/svg";
 
 const routes = [
   {
@@ -65,9 +66,9 @@ const Sidebar = (props: ISideBarProps) => {
           onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
-          className="block lg:hidden text-primary border w-fit"
+          className="block lg:hidden text-primary w-fit"
         >
-          X
+          <Cancel />
         </button>
       </div>
 
@@ -78,13 +79,13 @@ const Sidebar = (props: ISideBarProps) => {
         <nav className="mt-4 py-4 px-4 lg:mt-9 lg:px-6 flex flex-col justify-between h-full">
           <ul className="flex flex-col gap-2 w-full">
             {routes.slice(0, 2).map((item) => (
-              <li key={item.id}>
+              <li key={item.id} onClick={() => setSidebarOpen(!sidebarOpen)}>
                 <NavLink href={item.href} name={item.title} />
               </li>
             ))}
             <li className="font-medium text-base">SHARE</li>
             {routes.slice(2, 8).map((item) => (
-              <li key={item.id}>
+              <li key={item.id} onClick={() => setSidebarOpen(!sidebarOpen)}>
                 <NavLink href={item.href} name={item.title} />
               </li>
             ))}
