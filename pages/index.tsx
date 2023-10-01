@@ -87,6 +87,7 @@ export default function Home() {
                   alt={photo.alt_description}
                   fill
                   className="rounded-md select-none object-cover"
+                  loading="lazy"
                 />
                 <div className="bg-white absolute w-full rounded-b-md z-1 inner-div flex flex-col gap-2 p-4">
                   <p className="text-[#342C9A] font-bold w-full truncate">
