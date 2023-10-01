@@ -8,12 +8,10 @@ import React, {
 import { fetchUnsplashPhotos } from "@/services/api";
 import { useQuery } from "react-query";
 
-// import { useUnsplashPhotos } from "./api"; // Import your data fetching function
-
 interface SearchContextType {
   searchQuery: string;
   setSearch: (query: string) => void;
-  photos: any | null; // Adjust the type based on your response structure
+  photos: PhotoType[] | null;
   isLoading: boolean;
   isFetching: boolean;
   isError: boolean;
