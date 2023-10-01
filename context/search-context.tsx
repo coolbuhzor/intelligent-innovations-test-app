@@ -1,39 +1,3 @@
-// import React, { createContext, useContext, useState, ReactNode } from "react";
-
-// interface SearchContextType {
-//   searchQuery: string;
-//   setSearch: (query: string) => void;
-// }
-
-// const SearchContext = createContext<SearchContextType | undefined>(undefined);
-
-// export function useSearch() {
-//   const context = useContext(SearchContext);
-//   if (context === undefined) {
-//     throw new Error("useSearch must be used within a SearchProvider");
-//   }
-//   return context;
-// }
-
-// interface SearchProviderProps {
-//   children: ReactNode;
-// }
-
-// export function SearchProvider({ children }: SearchProviderProps) {
-//   const [searchQuery, setSearchQuery] = useState<string>("");
-
-//   const setSearch = (query: string) => {
-//     setSearchQuery(query);
-//   };
-
-//   return (
-//     <SearchContext.Provider value={{ searchQuery, setSearch }}>
-//       {children}
-//     </SearchContext.Provider>
-//   );
-// }
-
-// SearchProvider.tsx
 import React, {
   createContext,
   useContext,
@@ -56,10 +20,10 @@ interface SearchContextType {
   error: unknown;
 }
 
-const SearchContext = createContext<SearchContextType | undefined>(undefined);
+const DataContext = createContext<SearchContextType | undefined>(undefined);
 
-export function useSearch() {
-  const context = useContext(SearchContext);
+export function useData() {
+  const context = useContext(DataContext);
   if (context === undefined) {
     throw new Error("useSearch must be used within a SearchProvider");
   }
@@ -73,10 +37,10 @@ interface SearchProviderProps {
 export function SearchProvider({ children }: SearchProviderProps) {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [photos, setPhotos] = useState([]);
-  const { data, isLoading, isFetching, isError, error, refetch } = useQuery(
+  const { data, isLoading, isFetching, isError, error } = useQuery(
     ["unsplashPhotos", searchQuery],
     () => fetchUnsplashPhotos(searchQuery)
-  ); // Example usage of React Query for fetching data
+  );
 
   const setSearch = (query: string) => {
     setSearchQuery(query);
@@ -91,7 +55,7 @@ export function SearchProvider({ children }: SearchProviderProps) {
     }
   }, [data]);
   return (
-    <SearchContext.Provider
+    <DataContext.Provider
       value={{
         searchQuery,
         setSearch,
@@ -103,6 +67,6 @@ export function SearchProvider({ children }: SearchProviderProps) {
       }}
     >
       {children}
-    </SearchContext.Provider>
+    </DataContext.Provider>
   );
 }

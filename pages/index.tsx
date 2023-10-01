@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useSearch } from "@/context/search-context";
+import { useData } from "@/context/search-context";
 import { Fave, SelectCaret, Unlike } from "@/assets/svg";
 
 export default function Home() {
-  const { photos, error, isLoading, isFetching } = useSearch();
+  const { photos, error, isLoading, isFetching } = useData();
 
+  console.log(photos, "photos");
   if (isLoading || isFetching) {
     return (
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">

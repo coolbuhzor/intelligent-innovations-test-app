@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { HeaderDropdown } from "./header-drop-down";
-import { useSearch } from "@/context/search-context";
+import { useData } from "@/context/search-context";
 import { Hamburger, SearchIcon } from "@/assets/svg";
 
 const Header = (props: ISideBarProps) => {
-  const { setSearch } = useSearch();
+  const { setSearch } = useData();
   const [query, setQuery] = useState("");
 
   const handleSearch = () => {
@@ -56,6 +56,12 @@ const Header = (props: ISideBarProps) => {
                 placeholder="Find something..."
                 value={query}
                 onChange={(e) => handleChange(e)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    // Call your search function here
+                    handleSearch();
+                  }
+                }}
               />
               <button
                 onClick={handleSearch}
